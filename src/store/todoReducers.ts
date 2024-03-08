@@ -14,6 +14,9 @@ export const todosSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
+    setTodo: (state, { payload }: PayloadAction<Todo[]>) => {
+      state.value = payload;
+    },
     addTodo: (state, { payload }: PayloadAction<Todo["title"]>) => {
       const newTodo: Todo = {
         id: crypto.randomUUID(),
@@ -34,5 +37,5 @@ export const todosSlice = createSlice({
   },
 });
 
-export const { addTodo, toggleTodo, deleteTodo } = todosSlice.actions;
+export const { setTodo, addTodo, toggleTodo, deleteTodo } = todosSlice.actions;
 export default todosSlice.reducer;
