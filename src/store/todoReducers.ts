@@ -6,6 +6,9 @@ export type Todo = {
   isDone: boolean;
 };
 
+export type AddTodo = Omit<Todo, "id">;
+export type ToggleTodo = Omit<Todo, "title">;
+
 type TodoState = { value: Todo[] };
 
 const initialState: TodoState = { value: [] };
@@ -17,13 +20,8 @@ export const todosSlice = createSlice({
     setTodo: (state, { payload }: PayloadAction<Todo[]>) => {
       state.value = payload;
     },
-    addTodo: (state, { payload }: PayloadAction<Todo["title"]>) => {
-      const newTodo: Todo = {
-        id: crypto.randomUUID(),
-        title: payload,
-        isDone: false,
-      };
-      state.value.push(newTodo);
+    addTodo: (state, { payload }: PayloadAction<Todo>) => {
+      state.value.push(payload);
     },
     toggleTodo: (state, { payload }: PayloadAction<Todo["id"]>) => {
       const index = state.value.findIndex((todo) => todo.id === payload);

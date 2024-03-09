@@ -1,17 +1,47 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
-import { addTodo, deleteTodo, toggleTodo } from "../store/todoReducers";
+import {
+  AddTodo,
+  ToggleTodo,
+  addTodo,
+  deleteTodo,
+  setTodo,
+  toggleTodo,
+} from "../store/todoReducers";
+
+import * as TodoApi from "../apis";
 
 export const useTodo = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state) => state.todos.value);
 
-  const _addTodo = (title: string) => {
-    dispatch(addTodo(title));
+  useEffect(() => {
+    fetchTodo();
+  }, []);
+
+  const fetchTodo = async () => {
+    const todos = await TodoApi.fetchTodo();
+    dispatch(setTodo(todos));
   };
 
-  const handleToggleTodo = (id: string) => dispatch(toggleTodo(id));
-  const handleDeleteTodo = (id: string) => dispatch(deleteTodo(id));
+  const _addTodo = async (title: string) => {
+    const newTodo: AddTodo = {
+      title,
+      isDone: false,
+    };
+    const todo = await TodoApi.addTodo(newTodo);
+    dispatch(addTodo(todo));
+  };
+
+  const handleToggleTodo = async ({ id, isDone }: ToggleTodo) => {
+    await TodoApi.toggleTodo({ id, isDone });
+    dispatch(toggleTodo(id));
+  };
+
+  const handleDeleteTodo = async (id: string) => {
+    await TodoApi.deleteTodo(id);
+    dispatch(deleteTodo(id));
+  };
 
   const handleTodoSubmit = (e: FormEvent) => {
     e.preventDefault();

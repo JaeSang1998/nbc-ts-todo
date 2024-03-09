@@ -7,9 +7,11 @@ export const TodoList: React.FC = () => {
     useTodo();
 
   return (
-    <form onSubmit={handleTodoSubmit}>
-      <input name="title" type="text" />
-      <button type="submit">Add Todo</button>
+    <>
+      <form onSubmit={handleTodoSubmit}>
+        <input name="title" type="text" />
+        <button type="submit">Add Todo</button>
+      </form>
       <ul>
         {todos.map((todo) => (
           <TodoItem
@@ -20,6 +22,6 @@ export const TodoList: React.FC = () => {
           />
         ))}
       </ul>
-    </form>
+    </>
   );
 };

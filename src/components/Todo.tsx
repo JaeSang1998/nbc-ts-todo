@@ -1,9 +1,9 @@
 import React from "react";
-import { Todo } from "../store/todoReducers";
+import { Todo, ToggleTodo } from "../store/todoReducers";
 
 type TodoProps = {
   todo: Todo;
-  onToggle: (id: string) => void;
+  onToggle: (todo: ToggleTodo) => void;
   onDelete: (id: string) => void;
 };
 
@@ -13,7 +13,7 @@ export const TodoItem: React.FC<TodoProps> = ({ todo, onToggle, onDelete }) => {
       <input
         type="checkbox"
         checked={todo.isDone}
-        onChange={() => onToggle(todo.id)}
+        onChange={() => onToggle({ ...todo })}
       />
       {todo.title}
       <button onClick={() => onDelete(todo.id)}>Delete</button>
