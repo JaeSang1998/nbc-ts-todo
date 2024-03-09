@@ -1,46 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import * as TodoApi from "../apis";
+import { Todo } from "../types/Todo.types";
 
-const URL = "http://localhost:4000/todos";
-export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  const response = await axios.get(URL);
-  return response.data;
-});
-
-export const addTodo = createAsyncThunk(
-  "todos/addTodo",
-  async (title: string) => {
-    const response = await axios.post(URL, { title, isDone: false });
-    return response.data;
-  }
-);
-
+export const fetchTodo = createAsyncThunk("todos/fetchTodo", TodoApi.fetchTodo);
+export const addTodo = createAsyncThunk("todos/addTodo", TodoApi.addTodo);
 export const toggleTodo = createAsyncThunk(
   "todos/toggleTodo",
-  async (id: string) => {
-    const todo = await axios.get(`${URL}/${id}`);
-    const response = await axios.patch(`${URL}/${id}`, {
-      isDone: !todo.data.isDone,
-    });
-    return response.data;
-  }
+  TodoApi.toggleTodo
 );
-
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
-  async (id: string) => {
-    await axios.delete(`${URL}/${id}`);
-    return id;
-  }
+  TodoApi.deleteTodo
 );
-export type Todo = {
-  id: string;
-  title: string;
-  isDone: boolean;
-};
-
-export type AddTodo = Omit<Todo, "id">;
-export type ToggleTodo = Omit<Todo, "title">;
 
 type TodoState = { value: Todo[] };
 
@@ -52,7 +23,7 @@ export const todosSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTodos.fulfilled, (state, action) => {
+      .addCase(fetchTodo.fulfilled, (state, action) => {
         state.value = action.payload;
       })
       .addCase(addTodo.fulfilled, (state, action) => {

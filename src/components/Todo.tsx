@@ -1,9 +1,9 @@
 import React from "react";
-import { Todo, ToggleTodo } from "../store/todoReducers";
+import { Todo, ToggleTodo } from "../types/Todo.types";
 
 type TodoProps = {
   todo: Todo;
-  onToggle: (id: ToggleTodo) => void;
+  onToggle: (todo: ToggleTodo) => void;
   onDelete: (id: string) => void;
 };
 

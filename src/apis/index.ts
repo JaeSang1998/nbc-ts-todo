@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AddTodo, Todo, ToggleTodo } from "../store/todoReducers";
+import { AddTodo, Todo, ToggleTodo } from "../types/Todo.types";
 
 const URL = "http://localhost:4000/todos";
 
@@ -20,4 +20,5 @@ export const toggleTodo = async ({ id, isDone }: ToggleTodo) => {
 
 export const deleteTodo = async (id: Todo["id"]) => {
   await axios.delete(`${URL}/${id}`);
+  return id;
 };
