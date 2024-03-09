@@ -3,17 +3,8 @@ import { TodoItem } from "./Todo";
 import { useTodo } from "../hooks/TodoList.hooks";
 
 export const TodoList: React.FC = () => {
-  const {
-    isLoading,
-    todos,
-    handleTodoSubmit,
-    handleDeleteTodo,
-    handleToggleTodo,
-  } = useTodo();
-
-  if (isLoading) {
-    return <>loading...</>;
-  }
+  const { todos, handleTodoSubmit, handleDeleteTodo, handleToggleTodo } =
+    useTodo();
 
   return (
     <>

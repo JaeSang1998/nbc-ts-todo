@@ -6,7 +6,7 @@ import { useAddTodoMuation } from "../mutations/useAddTodoMuation";
 import { useDeleteTodoMuation } from "../mutations/useDeleteTodoMutation";
 
 export const useTodo = () => {
-  const { isLoading, todos } = useGetTodosQuery();
+  const { todos } = useGetTodosQuery();
   const { toggleTodo } = useToggleTodoMuation();
   const { addTodo } = useAddTodoMuation();
   const { deleteTodo } = useDeleteTodoMuation();
@@ -17,10 +17,6 @@ export const useTodo = () => {
     addTodo(target.title.value);
     (e.target as HTMLFormElement).reset();
   };
-
-  if (isLoading) {
-    return { isLoading } as const;
-  }
 
   return {
     todos,

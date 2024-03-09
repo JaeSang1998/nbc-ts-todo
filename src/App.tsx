@@ -1,5 +1,4 @@
-import { store } from "./store";
-import { Provider } from "react-redux";
+import { Suspense } from "react";
 import { TodoList } from "./components/TodoList";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -8,9 +7,9 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
+      <Suspense fallback={<>loading...</>}>
         <TodoList />
-      </Provider>
+      </Suspense>
     </QueryClientProvider>
   );
 }
